@@ -1,11 +1,7 @@
 <template>
 <div class="bar-page">
-    <div class="content-time">
-        <i></i>2019年5月
-    </div>
     <div class="bar-charts-box" id="bar-charts-box">
     </div>
-    
 </div>
 </template>
 <script>
@@ -28,7 +24,6 @@ export default {
             for (var i = 0; i < pointsList.length; i++) {
                 let itemY = chart.series[0].points[i];
                 let itemX = chart.series[1].points[i];
-                console.log(itemX)
                 itemY.update({
                     color:{
                         linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
@@ -55,6 +50,7 @@ export default {
             type: 'column', //表示柱状图
             marginTop: 60,
             backgroundColor: 'rgba(0,0,0,0)',
+            spacingBottom:5,
             options3d: {
                 enabled: true,
                 alpha: 0,
@@ -167,22 +163,5 @@ export default {
     width:100%;
     height:100%;
 }
-.content-time{
-    position:relative;
-    margin-top:1vh;
-    width:100%;
-    font-size:14px;
-    color:#EAA551;
-    padding-left:18px;
-    i{
-        display:block;
-        width:9px;
-        height:4px;
-        background:#EAA551;
-        position:absolute;
-        top:50%;
-        left:0;
-        transform:translate(0,-50%);
-    }
-}
+
 </style>

@@ -1,12 +1,5 @@
 <template>
     <div class="air-map">
-        <!--<div class="air-tabs-container">
-            <div class="tabs-item"><svg-icon class="svg-icon" style="color:#d73147" :icon-class="'airCar'"></svg-icon>任务中</div>
-            <div class="tabs-item"><svg-icon class="svg-icon" style="color:#01a2e6" :icon-class="'airCar'"></svg-icon>途中待命</div>
-            <div class="tabs-item"><svg-icon class="svg-icon" style="color:#009c4d" :icon-class="'airCar'"></svg-icon>站内待命</div>
-            <div class="tabs-item"><svg-icon class="svg-icon" style="color:#333333" :icon-class="'airCar'"></svg-icon>未上班下班</div>
-            <div class="tabs-item"><svg-icon class="svg-icon" style="color:#cccccc" :icon-class="'airCar'"></svg-icon>离线</div>
-        </div>-->
         <div class="map-header">
             <map-header></map-header>
         </div>
@@ -225,7 +218,7 @@ export default {
     padding:12px;
     box-sizing:border-box;
     position:absolute;
-    top:30px;
+    top:9vh;
     left:50%;
     transform:translate(-50%,0);
     background:rgba(5,27,74,0.8);
@@ -254,7 +247,7 @@ export default {
     width:600px;
     height:44px;
     display:flex;
-    padding:0 12px;
+    padding:0 8px;
     box-sizing:border-box;
     background:rgba(10,26,41,1);
     align-items:center;

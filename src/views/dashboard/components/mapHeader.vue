@@ -40,7 +40,7 @@ export default {
         width:100%;
         border-bottom:#216CFD 1px dashed;
         box-sizing:border-box;
-        padding-bottom:12px;
+        padding-bottom:8px;
         display:flex;
         font-size:14px;
         color:#fff;
@@ -76,7 +76,7 @@ export default {
         width:100%;
         box-sizing:border-box;
         padding-right:5vw;
-        margin-top:12px;
+        margin-top:8px;
         .status-text-box{
             width:100%;
             display:flex;

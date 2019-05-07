@@ -1,8 +1,5 @@
 <template>
 <div class="line-page">
-    <div class="content-time">
-        <i></i>2019年5月
-    </div>
     <div class="line-echarts-box" id="line-echarts-box">
     </div>
 </div>
@@ -21,6 +18,7 @@ export default {
 	chart: {
 		type: 'spline',
         backgroundColor: 'rgba(0,0,0,0)',
+        spacingBottom:5,
 	},
     credits: { enabled: false}, //去掉图表的highcharts文字
 	title: {
@@ -46,7 +44,7 @@ export default {
         }
     },
 	xAxis: {
-		categories: ['中心','分中心','第二医院','李惠利医院','鄞州人民医院','李惠利东部医院','第九医院','宁波大学附属医院','妇儿医院北部院区'],
+		categories: ['中心','第一分中心','第二分中心','第三分中心','中医院','第二医院','李惠利医院','鄞州人民医院','李惠利东部医院','第九医院','宁波大学附属医院','妇儿医院北部院区'],
         gridLineColor:'#254065',
         labels:{
             formatter() {
@@ -78,7 +76,7 @@ export default {
             }
 		},
         gridLineColor:'#254065',
-        tickPositions: [0,5,10,15,20,25],
+        tickPositions: [0,5,10,15,20,25,30],
         labels:{
             align:'left',
             style:{
@@ -132,24 +130,6 @@ export default {
     position:relative;
     width:100%;
     height:100%;
-    .content-time{
-        position:relative;
-        width:100%;
-        margin-top:1vh;
-        font-size:14px;
-        color:#EAA551;
-        padding-left:18px;
-        i{
-            display:block;
-            width:9px;
-            height:4px;
-            background:#EAA551;
-            position:absolute;
-            top:50%;
-            left:0;
-            transform:translate(0,-50%);
-        }
-}
 }
 .line-echarts-box{
     width:100%;

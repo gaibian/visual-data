@@ -1,7 +1,7 @@
 <template>
     <div class="abnormal-page">
         <!--轮播实现滚动-->
-        <div class="carousel-box">
+        <div class="carousel-box" ref="carousel" :style="carouselStyle">
             <div class="carousel" v-for="(item,index) in abnormalOptions" :key="index">
                 <div class="car-item">
                     <div class="title">{{item.title}}</div>
@@ -21,6 +21,8 @@ export default {
     name: 'abnormal',
     data() {
         return {
+            carouselStyle:{},
+            move:0,
             abnormalOptions:[{
                 title:'070 浙B3360X 30号车',
                 arr:['上下担架车在位','负压式骨折固定垫在位','急救舱中门开关 I/O','软担架在位']
@@ -30,22 +32,42 @@ export default {
             },{
                 title:'087 浙B1150QV 15号车',
                 arr:['氧气瓶 1 余量 0-5V','病人保险带系未系 I/O']
+            },{
+                title:'087 浙B1150QV 15号车',
+                arr:['氧气瓶 1 余量 0-5V','病人保险带系未系 I/O']
+            },{
+                title:'087 浙B1150QV 15号车',
+                arr:['氧气瓶 1 余量 0-5V','病人保险带系未系 I/O']
+            },{
+                title:'087 浙B1150QV 15号车',
+                arr:['氧气瓶 1 余量 0-5V','病人保险带系未系 I/O']
             }]
         }
-    }
+    },
+    mounted() {
+        // 轮播
+        let carousel = this.$refs.carousel;
+        setInterval(() => {
+            this.move += 90;
+            this.carouselStyle = {
+                'transform': `translate(0,-${this.move}px)`
+            }
+        },5000)
+    },
 }
 </script>
 <style lang="scss" scoped>
 .abnormal-page{
     width:100%;
-    height:100%;
+    height:92%;
+    margin-top:10px;
     overflow:hidden;
     .carousel-box{
         width:100%;
         height:100%;
         padding:0 20px;
         box-sizing:border-box;
-        overflow:hidden;
+        transition: all 2s linear;
         .carousel{
             width:100%;
             .car-item{

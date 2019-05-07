@@ -5,22 +5,36 @@
     <!--内容区域 图表的展示-->
     <div class="content-box tl charts-border-box">
       <border-div></border-div>
-      <div class="title">急救任务量</div>
+      <h2 class="title-box">
+        <span class="急救任务量"></span>
+      </h2>
       <pie-charts></pie-charts>
     </div>
     <div class="content-box tb charts-border-box">
       <border-div></border-div>
-      <div class="title">急救车异常情况一览表</div>
+      <div class="title-box">
+        <span class="title">急救车异常情况一览表</span>
+      </div>
       <car-abnormal></car-abnormal>
     </div>
     <div class="content-box rl charts-border-box">
       <border-div></border-div>
-      <div class="title">急救准点率</div>
+      <div class="title-box">
+        <span class="title">急救准点率</span>
+        <span class="content-time">
+            <i></i>2019年5月
+        </span>
+      </div>
       <bar-data></bar-data>
     </div>
     <div class="content-box rb charts-border-box">
       <border-div></border-div>
-      <div class="title">急救节点平均时间</div>
+      <div class="title-box">
+        <span class="title">急救节点平均时间</span>
+        <span class="content-time">
+            <i></i>2019年5月
+        </span>
+      </div>
       <line-data></line-data>
     </div>
     <aid-map></aid-map>
@@ -70,14 +84,36 @@ export default {
   z-index:999;
   background:#fff;
 }
-
+.content-time{
+    position:relative;
+    //margin-top:1vh;
+    width:100%;
+    font-size:14px;
+    color:#EAA551;
+    padding-left:18px;
+    margin-left:6px;
+    i{
+        display:block;
+        width:9px;
+        height:4px;
+        background:#EAA551;
+        position:absolute;
+        top:50%;
+        left:0;
+        transform:translate(0,-50%);
+    }
+}
 .content-box{
   position:fixed;
-  padding:2vh;
+  padding:1.5vh;
   box-sizing:border-box;
   z-index:9999;
+  .title-box{
+    width:100%;
+  }
   .title{
-    font-size:16px;
+    margin:0;
+    font-size:18px;
     background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
     background-image: -moz-gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
     background-image: gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
@@ -88,24 +124,24 @@ export default {
   &.tl{
     width:25vw;
     height:57vh;
-    top:1vh;
+    top:7vh;
     left:1vh;
   }
   &.tb{
     width:25vw;
     height:57vh;
-    top:1vh;
+    top:7vh;
     right:1vh;
   }
   &.rl{
     width:49vw;
-    height:40vh;
+    height:34vh;
     bottom:1vh;
     left:1vh;
   }
   &.rb{
     width:49vw;
-    height:40vh;
+    height:34vh;
     bottom:1vh;
     right:1vh;
   }
