@@ -5,8 +5,8 @@
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
-    "serve": "webpack-dev-server --host 192.168.3.213 --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
+    "serve": "webpack-dev-server --host 192.168.3.107 --inline --progress --config build/webpack.dev.conf.js",
+    "start": "npm run serve",
     "build": "node build/build.js",
     "build:report": "npm_config_report=true npm run build",
     "lint": "eslint --ext .js,.vue src",
@@ -83,7 +83,7 @@
   },
   "engines": {
     "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
+    "npm": ">= 6.9.0"
   },
   "browserslist": [
     "> 1%",
