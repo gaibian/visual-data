@@ -40,11 +40,6 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
   },
   {
-    path:'/testChart',
-    name:'testChart',
-    component: () => import ('@/views/dashboard/components/test')
-  },
-  {
     path:'/airMap',
     name:'airMap',
     component: () => import('@/views/dashboard/components/aidMap')

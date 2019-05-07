@@ -1,10 +1,11 @@
 <template>
 <div class="bar-page">
-    <div class="bar-charts-box" id="bar-charts-box">
-    </div>
-    <div class="time">
+    <div class="content-time">
         <i></i>2019年5月
     </div>
+    <div class="bar-charts-box" id="bar-charts-box">
+    </div>
+    
 </div>
 </template>
 <script>
@@ -18,21 +19,35 @@ export default {
         }
     },
     mounted() {
-        var colorArr = ['#FD6F78', '#FBD064', '#BDDB5E'];
+        var colorArr = ['rgba(34,97,254,1)', 'rgba(42,171,228,1)', 'rgba(234,165,80,1)'];
         function SetEveryOnePointColor(chart) {            
             //获得第一个序列的所有数据点
             var pointsList = chart.series[0].points;
+            console.log(pointsList)
             //遍历设置每一个数据点颜色
             for (var i = 0; i < pointsList.length; i++) {
-                chart.series[0].points[i].update({
-                    color: {
-                        linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 }, //横向渐变效果 如果将x2和y2值交换将会变成纵向渐变效果
-                        stops: [
-                                    [0, Highcharts.Color(colorArr[i]).setOpacity(1).get('rgba')],
-                                    [1, 'rgb(255, 255, 255)']
-                                ]  
+                let itemY = chart.series[0].points[i];
+                let itemX = chart.series[1].points[i];
+                console.log(itemX)
+                itemY.update({
+                    color:{
+                        linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
+                        stops:[
+                            [0, Highcharts.Color(colorArr[0]).setOpacity(1).get('rgba')],
+                            [1, itemY.y < 80 ? '#f32e0d' : 'rgba(42,171,228,1)']
+                        ]
                     }
-                });
+                })
+                itemX.update({
+                    color:{
+                        linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
+                        stops:[
+                            [0, Highcharts.Color(colorArr[2]).setOpacity(1).get('rgba')],
+                            [1, itemX.y < 80 ? '#f32e0d' : 'rgba(251,201,143,1)']
+                        ]
+                    }
+                })
+                
             }
         }
         var chart = Highcharts.chart('bar-charts-box',{
@@ -63,25 +78,34 @@ export default {
                 }
             },
         },
+        title: {
+            text: null
+        },
+        subtitle: {
+            text: null
+        },
+        credits: { enabled: false}, //去掉图表的highcharts文字
         plotOptions: {
             column: {
                 depth: 25,
-                groupPadding:0.1,
-                pointWidth: 10
+                groupPadding:0.25,
+                pointWidth: 15,
             }
         },
         legend: {  //图例
             align:'left',
             itemMarginTop: 0,
             verticalAlign:'top',
-            y:-38,
-            x:100,
+            y:0,
+            x:-5,
+            itemHoverStyle:{
+                color:'#fff'
+            },
             itemStyle: {
-                color: '#fff'
+                color: '#76C0FF',
             }
         },
         xAxis: {
-            //categories: Highcharts.getOptions().lang.shortMonths,
             categories:['中心','分中心','第二医院','李惠利医院','鄞州人民医院','李惠利东部医院','第九医院','宁波大学附属医院','妇儿医院北部院区'],
             labels: {
                 style: {
@@ -99,138 +123,36 @@ export default {
                     }
                     return reallyVal
                 },
-                lineColor: '#223b61',
-                tickColor: '#223b61',
-            }
+            },
+            gridLineColor:'#254065'
         },
         yAxis: {
             title: {
                 text: null
             },
+            // max:100,
+            // tickInterval:20,
+            gridLineColor:'#254065',
+            tickPositions: [0, 20, 40,60,80, 100],
             labels: {
                 style: {
                     color: '#76C0FF'
                 },
-                lineColor: '#223b61',
-                tickColor: '#223b61',
+                formatter() {
+                    return `${this.value}%`
+                }
             },
         },
-        // scrollbar: {
-        //     enabled: true
-        // },
         series: [{
             name: '出车准点率',
-            data: [20,98,78,86,65,90,76,78,12]
+            data: [90,98,78,86,65,90,76,78,12],
         },{
             name: '到达准点率',
             data: [20,90,78,90,56,78,5,39,98]
         }]
 },(chart) => {
-    SetEveryOnePointColor(chart);
+     SetEveryOnePointColor(chart);
 });
-        // this.myChart = echarts.init(document.getElementById('bar-charts-box'));
-        // var xData = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
-        // var days = [''];
-
-        // var data = [[0,0,5],[0,1,11],[0,2,3],[6,3,1],[6,4,2],[6,5,2],[6,6,6]];
-        // let option = {
-        //     legend: {  //状态栏文字样式
-        //         top:16,
-        //         itemGap:20,
-        //         left:120,
-        //         textStyle: {
-        //             color:'#76c0ff',
-        //             fontSize: 14
-        //         }
-        //     },
-        //     tooltip: {},
-        //     textStyle:{ //全局的文字样式
-        //         color: '#76c0ff',
-        //         fontSize: 14,
-        //     },
-        //     grid3D:{  //图形网格模块 => 没有中间的刻度线
-        //         boxWidth: 360,
-        //         boxDepth: 20,
-        //         splitLine: {
-        //             show: false
-        //         },
-        //         light: {
-        //             main: {
-        //                 intensity: 1.2,
-        //                 shadow: true
-        //             },
-        //             ambient: {
-        //                 intensity: 0.3
-        //             }
-        //         },
-        //         viewControl:{
-        //             alpha: 0,
-        //             beta: 0,
-        //             zoomSensitivity:0,
-        //         }
-        //     },
-        //     visualMap: {
-        //         show:false,
-        //         max: 15,
-        //         inRange: {
-        //             color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-        //         }
-        //     },
-        //     dataset: {
-        //         source: [
-        //             ['product', '出车准点率', '到达准点率'],
-        //             ['中心', 43.3, 85.8, 93.7],
-        //             ['分中心', 83.1, 73.4, 55.1],
-        //             ['站点', 83.1, 23.4, 78.1],
-        //         ]
-        //     },
-        //     zAxis3D: {
-        //         type: 'value',
-        //         show: false,
-                
-        //     },
-        //     xAxis3D: {
-        //         name:'x',
-        //         nameGap: 1,
-        //         type: 'category',
-        //         data: xData
-        //     },
-        //     yAxis3D: {
-        //         name:'',
-        //         type: 'category',
-        //         data: days
-        //     },
-        //     series:[{
-        //         type: 'bar3D',
-        //         data: data.map(function (item) {
-        //             console.log(item)
-        //             return {
-        //                 value: [item[1], item[0], item[2]],
-        //             }
-        //         }),
-        //         itemStyle: {
-        //             normal: {
-        //                 color: 'red'
-        //             }
-        //         },
-        //         shading: 'lambert',
-        //         label: {
-        //             textStyle: {
-        //                 fontSize: 16,
-        //                 borderWidth: 1
-        //             }
-        //         },
-
-        //         emphasis: {
-        //             label: {
-        //                 textStyle: {
-        //                     fontSize: 20,
-        //                 }
-        //             },
-        //         }
-        //     }]
-        // };
-        // this.myChart.setOption(option)
     }, 
 }
 </script>
@@ -245,10 +167,10 @@ export default {
     width:100%;
     height:100%;
 }
-.time{
-    position:absolute;
-    top:20px;
-    left:16px;
+.content-time{
+    position:relative;
+    margin-top:1vh;
+    width:100%;
     font-size:14px;
     color:#EAA551;
     padding-left:18px;

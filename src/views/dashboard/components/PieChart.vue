@@ -38,6 +38,7 @@ export default {
               beta:0
             }
           },
+          credits: { enabled: false}, //去掉图表的highcharts文字
           title: {
             text: null
           },
@@ -67,12 +68,6 @@ export default {
             data: [
               ['第一分中心<br>出车次数',300],
               ['中心<br>出车100次',100],
-              // {
-              //   name: 'Chrome',
-              //   y: 12.8,
-              //   sliced: true,
-              //   selected: true
-              // },
               ['第三分中心<br>出车350次',350],
               ['第二分中心<br>出车250次',250],
             ]

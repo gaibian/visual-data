@@ -7,18 +7,25 @@
             <div class="tabs-item"><svg-icon class="svg-icon" style="color:#333333" :icon-class="'airCar'"></svg-icon>未上班下班</div>
             <div class="tabs-item"><svg-icon class="svg-icon" style="color:#cccccc" :icon-class="'airCar'"></svg-icon>离线</div>
         </div>-->
+        <div class="map-header">
+            <map-header></map-header>
+        </div>
         <div class="map" id="air-map"></div>
-        <div class="btn-box">
+        <!--<div class="btn-box">
             <el-button type="primary" size="mini" @click="handleHotShow">打开热力图</el-button>
             <el-button type="primary" size="mini" @click="handleYI">移动车辆</el-button>
             <el-button size="mini" @click="handleHotHide">关闭热力图</el-button>
-        </div>
+        </div>-->
     </div>
 </template>
 <script>
 import heatmapData from '@/data/hotMap'
+import mapHeader from './mapHeader'
 export default {
     name: 'airMap',
+    components:{
+        mapHeader
+    },
     data() {
         return {
             loca: null,
@@ -212,6 +219,18 @@ export default {
     width:100%;
     height:100%;
     box-shadow:10px 10px 10px rgba(0,0,0,1);
+}
+.map-header{
+    width:44vw;
+    padding:12px;
+    box-sizing:border-box;
+    position:absolute;
+    top:30px;
+    left:50%;
+    transform:translate(-50%,0);
+    background:rgba(5,27,74,0.8);
+    box-shadow:inset 4px 4px 20px rgba(0,229,255,0.3), inset -4px -4px 20px rgba(0,229,255,0.3);
+    z-index:999;
 }
 .bottom-map{
     position:fixed;

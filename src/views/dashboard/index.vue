@@ -70,61 +70,30 @@ export default {
   z-index:999;
   background:#fff;
 }
-.marker-box{
-  position:absolute;
-  width:23vw;
-  height:50%;
-  &.pos1{
-    top:0px;
-    left:0px;
-    background:linear-gradient(to right,#040c27 20%,rgba(0,0,0,0));
-  }
-  &.pos2{
-    bottom:0px;
-    left:0px;
-    background:linear-gradient(to right,#040c27 20%,rgba(0,0,0,0));
-  }
-  &.pos3{
-    top:0px;
-    right:0px;
-    background:linear-gradient(to left,#040c27 20%,rgba(0,0,0,0));
-  }
-  &.pos4{
-    bottom:0px;
-    right:0px;
-    background:linear-gradient(to left,#040c27 20%,rgba(0,0,0,0));
-  }
-  &.pos5{
-    width:100%;
-    height:20vh;
-    bottom:0px;
-    right:0px;
-    background:linear-gradient(to top,#040c27 20%,rgba(0,0,0,0));
-  }
-}
+
 .content-box{
   position:fixed;
   padding:2vh;
   box-sizing:border-box;
   z-index:9999;
   .title{
-    font-weight:bold;
+    font-size:16px;
     background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
     background-image: -moz-gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
     background-image: gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    //color:#fff;
+    font-weight:bold;
   }
   &.tl{
     width:25vw;
-    height:56vh;
+    height:57vh;
     top:1vh;
     left:1vh;
   }
   &.tb{
     width:25vw;
-    height:56vh;
+    height:57vh;
     top:1vh;
     right:1vh;
   }
