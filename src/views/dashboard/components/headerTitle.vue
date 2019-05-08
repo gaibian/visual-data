@@ -30,7 +30,7 @@ export default {
     position: absolute;
     .header-title{
     position: absolute;
-    background-image: url(/static/img/header.2ced04e.png);
+    background-image: url(../../../assets/header.png);
     background-size: 100% 43px;
     height: 43px;
     width: 100%;
