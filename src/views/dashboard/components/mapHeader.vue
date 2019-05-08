@@ -5,11 +5,11 @@
                 <svg-icon :icon-class="'Location'"></svg-icon>
                 <span>浙江省</span>
                 <span>宁波市</span>
-                <span class="ads-choice">江北区<svg-icon :icon-class="'time'" style="margin-left:4px"></svg-icon></span>
+                <span class="ads-choice">江北区<svg-icon :icon-class="'xiajiantou'" style="margin-left:4px"></svg-icon></span>
             </div>
             <div class="choice-time-box">
                 <svg-icon :icon-class="'time'" style="margin-right:4px;"></svg-icon>
-                <span class="time-item">2019-05-01</span> -
+                <span class="time-item">2019-05-01</span> —
                 <span class="time-item">2019-05-30</span>
             </div>
         </div>
