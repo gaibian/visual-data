@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <!--标题-->
-    <!--<header-title></header-title>-->
+    <header-title></header-title>
     <!--内容区域 图表的展示-->
     <div class="content-box tl charts-border-box">
       <border-div></border-div>

@@ -14,6 +14,7 @@
                 </div>
             </div>
         </div>
+        <img src="../../../assets/shading.png">
     </div>
 </template>
 <script>
@@ -105,6 +106,7 @@ export default {
     height:92%;
     margin-top:10px;
     overflow:hidden;
+    position: relative;
     .carousel-box{
         width:100%;
         padding:0 20px;
@@ -159,6 +161,11 @@ export default {
                 }
             }
         }
+    }
+    img{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     }
 }
 </style>
