@@ -84,7 +84,7 @@ export default {
     　　　　　　　　} 
   　　　　　　　　},
                 style:{
-                  fontSize:'14px',
+                  fontSize:'12px',
                   color:'#fff',
                   fontWeight:'normal',
                   textOutline:'rgba(0,0,0,0)'
@@ -166,7 +166,7 @@ export default {
       .item-flex{
         position:relative;
         flex:3;
-        font-size:13px;
+        font-size:12px;
         text-align:center;
         color:#98bfe9;
         cursor:pointer;
@@ -249,7 +249,7 @@ export default {
 }
 #pie-chart{
     position:absolute;
-    top:24%;
+    top:15%;
     left:0;
     width:100%;
     height:60%;

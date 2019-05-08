@@ -43,7 +43,7 @@ export default {
         box-sizing:border-box;
         padding-bottom:8px;
         display:flex;
-        font-size:14px;
+        font-size:12px;
         color:#fff;
         .location-box{
             flex:1;
@@ -83,7 +83,7 @@ export default {
             display:flex;
             .status-item{
                 flex:1;
-                font-size:14px;
+                font-size:12px;
                 color:#fff;
                 cursor:pointer;
             }

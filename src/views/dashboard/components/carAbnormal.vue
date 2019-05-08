@@ -124,7 +124,8 @@ export default {
                 box-sizing:border-box;
                 .title{
                     width:100%;
-                    font-size:16px;
+                    font-size:12px;
+                    font-weight: bold;
                     color:#eee;
                 }
                 ul{
@@ -136,7 +137,8 @@ export default {
                         position:relative;
                         width:100%;
                         list-style:none;
-                        font-size:13px;
+                        font-size:12px;
+                        font-weight: 400;
                         color:#eee;
                         padding-left:16px;
                         box-sizing:border-box;

@@ -7,6 +7,7 @@
       <border-div></border-div>
       <div class="title-box">
         <span class="title">急救任务量</span>
+        <img src="../../assets/xie.png">
         <span class="content-time">
             <i></i>2019年5月
         </span>
@@ -24,6 +25,7 @@
       <border-div></border-div>
       <div class="title-box">
         <span class="title">急救准点率</span>
+        <img src="../../assets/xie.png">
         <span class="content-time">
             <i></i>2019年5月
         </span>
@@ -34,6 +36,7 @@
       <border-div></border-div>
       <div class="title-box">
         <span class="title">急救节点平均时间</span>
+        <img src="../../assets/xie.png">
         <span class="content-time">
             <i></i>2019年5月
         </span>
@@ -113,10 +116,16 @@ export default {
   z-index:9999;
   .title-box{
     width:100%;
+    line-height: 25px;
+    img{
+      width: 180px;
+      height: 20px;
+      margin-left: 15px;
+    }
   }
   .title{
     margin:0;
-    font-size:18px;
+    font-size:16px;
     background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
     background-image: -moz-gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
     background-image: gradient(linear, 0 0, 0 bottom, from(rgba(228,192,114,1)), to(rgba(236,156,69,1)));
