@@ -11,6 +11,7 @@ import Highcharts from 'highcharts'
 import VueHighCharts from 'vue-highcharts'
 import highcharts3d from 'highcharts/highcharts-3d'
 highcharts3d(Highcharts)
+
 import _g from './utils/global'
 import App from './App'
 import store from './store'

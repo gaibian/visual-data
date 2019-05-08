@@ -5,9 +5,12 @@
     <!--内容区域 图表的展示-->
     <div class="content-box tl charts-border-box">
       <border-div></border-div>
-      <h2 class="title-box">
-        <span class="急救任务量"></span>
-      </h2>
+      <div class="title-box">
+        <span class="title">急救任务量</span>
+        <span class="content-time">
+            <i></i>2019年5月
+        </span>
+      </div>
       <pie-charts></pie-charts>
     </div>
     <div class="content-box tb charts-border-box">
@@ -95,7 +98,7 @@ export default {
     i{
         display:block;
         width:9px;
-        height:4px;
+        height:2px;
         background:#EAA551;
         position:absolute;
         top:50%;
