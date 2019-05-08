@@ -126,14 +126,14 @@ export default {
   }
   &.tl{
     width:25vw;
-    height:57vh;
-    top:7vh;
+    height:60vh;
+    top:4vh;
     left:1vh;
   }
   &.tb{
     width:25vw;
-    height:57vh;
-    top:7vh;
+    height:60vh;
+    top:4vh;
     right:1vh;
   }
   &.rl{

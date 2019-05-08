@@ -215,10 +215,10 @@ export default {
 }
 .map-header{
     width:44vw;
-    padding:12px;
+    padding:8px 12px;
     box-sizing:border-box;
     position:absolute;
-    top:9vh;
+    top:52px;
     left:50%;
     transform:translate(-50%,0);
     background:rgba(5,27,74,0.8);

@@ -42,6 +42,7 @@ export default {
         text-align:center;
         color:#02a9ff;
         line-height:40px;
+        font-weight:bold;
     }
 }
 }

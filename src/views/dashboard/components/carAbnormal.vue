@@ -14,7 +14,9 @@
                 </div>
             </div>
         </div>
-        <img src="../../../assets/shading.png">
+        <div class="img-box">
+            <img width="100%" src="../../../assets/shading.png">
+        </div>
     </div>
 </template>
 <script>
@@ -162,10 +164,13 @@ export default {
             }
         }
     }
-    img{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    .img-box{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding:0 20px;
+        box-sizing:border-box;
+        font-size:0;
     }
 }
 </style>

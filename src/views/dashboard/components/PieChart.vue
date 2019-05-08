@@ -13,7 +13,7 @@
             <span class="line"></span>
           </div>
         </div>
-        <div id="pie-chart" style="margin-top:20px"></div>
+        <div id="pie-chart"></div>
     </div>
 </template>
 <script>
@@ -248,8 +248,10 @@ export default {
   }
 }
 #pie-chart{
+    position:absolute;
+    top:24%;
+    left:0;
     width:100%;
     height:60%;
-    //height:60%;
 }
 </style>
