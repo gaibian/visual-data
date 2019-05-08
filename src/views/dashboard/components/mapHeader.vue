@@ -2,10 +2,10 @@
     <div class="map-header-container">
         <div class="header-top-box">
             <div class="location-box">
-                <svg-icon :icon-class="'location'"></svg-icon>
+                <svg-icon :icon-class="'Location'"></svg-icon>
                 <span>浙江省</span>
                 <span>宁波市</span>
-                <span class="ads-choice">江北区<svg-icon :icon-class="'down-icon'" style="margin-left:4px"></svg-icon></span>
+                <span class="ads-choice">江北区<svg-icon :icon-class="'time'" style="margin-left:4px"></svg-icon></span>
             </div>
             <div class="choice-time-box">
                 <svg-icon :icon-class="'time'" style="margin-right:4px;"></svg-icon>
@@ -20,7 +20,8 @@
                 <div class="status-item">站内待命</div>
                 <div class="status-item">未上班/下班</div>
             </div>
-            <div class="hot-btn"></div>
+            <svg-icon :icon-class="'ThermodynamicChart_nocolor'" class="hot-btn"></svg-icon>
+            <!-- <div class="hot-btn"></div> -->
         </div>
     </div>
 </template>
@@ -95,7 +96,7 @@ export default {
             width:24px;
             height:24px;
             cursor:pointer;
-            background:url('../../../assets/hotBtn.png');
+            // background:url('../../../assets/hotBtn.png');
             background-size:contain;
         }
     }

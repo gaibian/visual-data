@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="img-box">
-            <img width="100%" src="../../../assets/shading.png">
+            <span></span>
         </div>
     </div>
 </template>
@@ -171,6 +171,12 @@ export default {
         padding:0 20px;
         box-sizing:border-box;
         font-size:0;
+        span{
+            height: 25px;
+            display: block;
+            background: -webkit-linear-gradient(rgba(0,0,0,0),rgba(15, 32, 76, 1));
+
+        }
     }
 }
 </style>
