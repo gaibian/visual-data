@@ -216,7 +216,7 @@ export default {
     box-shadow:10px 10px 10px rgba(0,0,0,1);
 }
 .map-header{
-    width:44vw;
+    width:47vw;
     padding:8px 12px;
     box-sizing:border-box;
     position:absolute;
