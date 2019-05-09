@@ -1,7 +1,7 @@
 <template>
     <div class="air-map">
         <div class="map-header">
-            <map-header></map-header>
+            <map-header @hotChange="handleHotChange"></map-header>
         </div>
         <div class="map" id="air-map"></div>
         <!--<div class="btn-box">
@@ -53,7 +53,6 @@ export default {
             this.amap = this.loca.getMap();  //获取到高德地图
             var marker,polyline,passedPolyline
             //需要在地图上面添加蒙版
-
             for(let item of this.carData){
                 item.lineArr.push(item.center)
                 let marker = new AMap.Marker({
@@ -120,6 +119,9 @@ export default {
         }
     },
     methods:{
+        handleHotChange(flag) {
+            flag ? this.handleHotHide() : this.handleHotShow()
+        },
         handleYI() {
             //车辆的实时定位 存入对应的数组
             function random(lower, upper) {

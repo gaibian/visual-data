@@ -53,9 +53,9 @@ export default {
                     //实际返回的刻度值
                 var reallyVal = labelVal;
                     //判断刻度值的长度
-                if(labelVal.length > 3){
+                if(labelVal.length > 4){
                     //截取刻度值
-                    reallyVal = labelVal.substr(0,3)+"<br/>"+labelVal.substring(3,labelVal.length-1);
+                    reallyVal = labelVal.substr(0,4)+"<br/>"+labelVal.substring(4,labelVal.length);
                 }
                 return reallyVal
             },
