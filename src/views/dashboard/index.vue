@@ -85,11 +85,12 @@ export default {
       switchFlag:true,
     }
   },
-  watch:{
-    time() {
-      this.keyIndex ++
-    }
-  },
+  // watch:{
+  //   time() {
+  //     console.log('ssss')
+  //     this.keyIndex ++
+  //   }
+  // },
   created() {
    
   },
@@ -123,6 +124,7 @@ export default {
       
     }
   },
+  
   computed: {
     time() {
       return this.$store.state.dateTime

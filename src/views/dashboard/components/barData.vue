@@ -14,7 +14,7 @@ export default {
             myChart:null,
             newData:[{
                 name: '出车准点率',
-                data: [90,98,78,86,65,90,76,78,12],
+                data: [90,98,78,86,65,90,76,78,78],
             },{
                 name: '到达准点率',
                 data: [20,90,78,90,56,78,5,39,98]
@@ -22,11 +22,116 @@ export default {
         }
     },
     mounted() {
-        var colorArr = ['rgba(34,97,254,1)', 'rgba(42,171,228,1)', 'rgba(234,165,80,1)'];
-        function SetEveryOnePointColor(chart) {            
+        
+        this.chart = Highcharts.chart('bar-charts-box',{
+            chart: {
+                type: 'column', //表示柱状图
+                marginTop: 60,
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutBounce'
+                },
+                backgroundColor: 'rgba(0,0,0,0)',
+                spacingBottom:5,
+                options3d: {
+                    enabled: true,
+                    alpha: 0,
+                    beta: 0,
+                    depth: 35,
+                    viewDistance: 25,      // 视图距离，它对于计算角度影响在柱图和散列图非常重要。此值不能用于3D的饼图
+                    frame: {                // Frame框架，3D图包含柱的面板，我们以X ,Y，Z的坐标系来理解，X轴与 Z轴所形成
+                        // 的面为bottom，Y轴与Z轴所形成的面为side，X轴与Y轴所形成的面为back，bottom、
+                        // side、back的属性一样，其中size为感官理解的厚度，color为面板颜色
+                        bottom: {
+                            size: 10
+                        },
+                        side: {
+                            size: 1,
+                            color: 'transparent'
+                        },
+                        back: {
+                            size: 1,
+                            color: 'rgba(0,0,0,0)'
+                        }
+                    }
+                },
+            },
+            title: {
+                text: null
+            },
+            subtitle: {
+                text: null
+            },
+            credits: { enabled: false}, //去掉图表的highcharts文字
+            plotOptions: {
+                column: {
+                    depth: 25,
+                    groupPadding:0.25,
+                    pointWidth: 15,
+                },
+            
+            },
+            legend: {  //图例
+                align:'left',
+                itemMarginTop: 0,
+                verticalAlign:'top',
+                y:0,
+                x:-5,
+                itemHoverStyle:{
+                    color:'#fff'
+                },
+                itemStyle: {
+                    color: '#76C0FF',
+                }
+            },
+            xAxis: {
+                categories:['中心','分中心','第二医院','李惠利医院','鄞州人民医院','李惠利东部医院','第九医院','宁波大学附属医院','妇儿医院北部院区'],
+                labels: {
+                    style: {
+                        color: '#76C0FF'
+                    },
+                    formatter() {
+                            //获取到刻度值
+                        var labelVal = this.value;
+                            //实际返回的刻度值
+                        var reallyVal = labelVal;
+                            //判断刻度值的长度
+                        if(labelVal.length > 4){
+                            //截取刻度值
+                            reallyVal = labelVal.substr(0,4)+"<br/>"+labelVal.substring(4,labelVal.length);
+                        }
+                        return reallyVal
+                    },
+                },
+                gridLineColor:'#254065'
+            },
+            yAxis: {
+                title: {
+                    text: null
+                },
+                // max:100,
+                // tickInterval:20,
+                gridLineColor:'#254065',
+                tickPositions: [0, 20, 40,60,80, 100],
+                labels: {
+                    style: {
+                        color: '#76C0FF'
+                    },
+                    formatter() {
+                        return `${this.value}%`
+                    }
+                },
+            },
+            series: this.newData
+        },(chart) => {
+            this.SetEveryOnePointColor(chart);
+        });
+    },
+    methods:{
+        SetEveryOnePointColor(chart) {
+            let colorArr = ['rgba(34,97,254,1)', 'rgba(42,171,228,1)', 'rgba(234,165,80,1)'];
             //获得第一个序列的所有数据点
             var pointsList = chart.series[0].points;
-            console.log(pointsList)
             //遍历设置每一个数据点颜色
             for (var i = 0; i < pointsList.length; i++) {
                 let itemY = chart.series[0].points[i];
@@ -51,123 +156,31 @@ export default {
                 })
                 
             }
+        },
+        handleUpdate() {
+            this.newData = [{
+                name: '出车准点率',
+                type: 'column',
+                data: [90,34,89,67,90,12,47,90,78],
+            },{
+                name: '出车准点率',
+                type: 'column',
+                data: [90,98,78,86,65,90,76,78,14],
+            }]
+            this.chart.update({
+                series:this.newData
+            })
         }
-        var chart = Highcharts.chart('bar-charts-box',{
-        chart: {
-            type: 'column', //表示柱状图
-            marginTop: 60,
-            animation: {
-                duration: 1500,
-                easing: 'easeOutBounce'
-            },
-            backgroundColor: 'rgba(0,0,0,0)',
-            spacingBottom:5,
-            options3d: {
-                enabled: true,
-                alpha: 0,
-                beta: 0,
-                depth: 35,
-                viewDistance: 25,      // 视图距离，它对于计算角度影响在柱图和散列图非常重要。此值不能用于3D的饼图
-                frame: {                // Frame框架，3D图包含柱的面板，我们以X ,Y，Z的坐标系来理解，X轴与 Z轴所形成
-                    // 的面为bottom，Y轴与Z轴所形成的面为side，X轴与Y轴所形成的面为back，bottom、
-                    // side、back的属性一样，其中size为感官理解的厚度，color为面板颜色
-                    bottom: {
-                        size: 10
-                    },
-                    side: {
-                        size: 1,
-                        color: 'transparent'
-                    },
-                    back: {
-                        size: 1,
-                        color: 'rgba(0,0,0,0)'
-                    }
-                }
-            },
-        },
-        title: {
-            text: null
-        },
-        subtitle: {
-            text: null
-        },
-        credits: { enabled: false}, //去掉图表的highcharts文字
-        plotOptions: {
-            // area:{
-            //     fillColor:{
-            //          x1: 0, 
-            //          y1: 1, 
-            //          x2: 0, 
-            //          y2: 0 
-            //     },
-            //     stops:[[0, 'rgb(255, 255, 255)'],
-            //             [0.3, 'rgb(255, 0, 255)'],
-            //             [0.6, 'rgb(0, 255, 0)'],
-            //             [1, 'rgb(200, 200, 255)']]
-            // },
-            column: {
-                depth: 25,
-                groupPadding:0.25,
-                pointWidth: 15,
-            },
-        
-        },
-        legend: {  //图例
-            align:'left',
-            itemMarginTop: 0,
-            verticalAlign:'top',
-            y:0,
-            x:-5,
-            itemHoverStyle:{
-                color:'#fff'
-            },
-            itemStyle: {
-                color: '#76C0FF',
-            }
-        },
-        xAxis: {
-            categories:['中心','分中心','第二医院','李惠利医院','鄞州人民医院','李惠利东部医院','第九医院','宁波大学附属医院','妇儿医院北部院区'],
-            labels: {
-                style: {
-                    color: '#76C0FF'
-                },
-                formatter() {
-                        //获取到刻度值
-                    var labelVal = this.value;
-                        //实际返回的刻度值
-                    var reallyVal = labelVal;
-                        //判断刻度值的长度
-                    if(labelVal.length > 4){
-                        //截取刻度值
-                        reallyVal = labelVal.substr(0,4)+"<br/>"+labelVal.substring(4,labelVal.length);
-                    }
-                    return reallyVal
-                },
-            },
-            gridLineColor:'#254065'
-        },
-        yAxis: {
-            title: {
-                text: null
-            },
-            // max:100,
-            // tickInterval:20,
-            gridLineColor:'#254065',
-            tickPositions: [0, 20, 40,60,80, 100],
-            labels: {
-                style: {
-                    color: '#76C0FF'
-                },
-                formatter() {
-                    return `${this.value}%`
-                }
-            },
-        },
-        series: this.newData
-},(chart) => {
-     SetEveryOnePointColor(chart);
-});
-
+    },
+    watch: {
+      time() {
+        this.handleUpdate()
+      }
+    },   
+    computed: {
+      time() {
+        return this.$store.state.dateTime
+      }
     }, 
 }
 </script>

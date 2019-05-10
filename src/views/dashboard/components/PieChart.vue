@@ -23,7 +23,9 @@ export default {
     name:'pieChart',
     data() {
         return {
+          chart:null,
           tabIndex:0,
+          update:false,
           tabOptions:[{
             name:'总览',
           },{
@@ -38,10 +40,14 @@ export default {
     methods:{
       handleTabClick(item,index) {
         this.tabIndex = index
+      },
+      handleUpdate() {
+        console.log('gengxle')
+        this.chart.series[0].setData([129.2, 144.0, 176.0]);
       }
     },
     mounted() {
-        var chart = Highcharts.chart('pie-chart', {
+        this.chart = Highcharts.chart('pie-chart', {
           chart: {
             type: 'variablepie',
             backgroundColor: 'rgba(0,0,0,0)',
@@ -74,13 +80,17 @@ export default {
               center:['50%','50%'],
               dataLabels: {
                 enabled: true,
+                //connectorPadding:-20,
+                connectorWidth:1,
+                padding:0,
+                distance:5,
                 formatter: function() {
     　　　　　　　　if(this.point.name == '李惠利医院'){
-                      return `<span style="color:#006cff">${this.point.name}<br>出车${this.point.y}</span>`
+                      return `<span style="color:#006cff">${this.point.name.substr(0,4)}</span><br><span style="color:#006cff">${this.point.name.substring(4,this.point.name.length)}${this.point.y}次</span>`
     　　　　　　　　}else if(this.point.name == '鄞州人民医院'){
-                      return `<span style="color:#009c4d">${this.point.name}<br>出车${this.point.y}</span>`
+                       return `<span style="color:#009c4d">${this.point.name.substr(0,4)}</span><br><span style="color:#009c4d">${this.point.name.substring(4,this.point.name.length)}${this.point.y}次</span>`
     　　　　　　　　}else if(this.point.name == '李惠利东部医院'){
-                      return `<span style="color:#eaa550">${this.point.name}<br>出车${this.point.y}</span>`
+                       return `<span style="color:#eaa550">${this.point.name.substr(0,4)}</span><br><span style="color:#eaa550">${this.point.name.substring(4,this.point.name.length)}${this.point.y}次</span>`
     　　　　　　　　} 
   　　　　　　　　},
                 style:{
@@ -94,7 +104,7 @@ export default {
           },
           series: [{
             type: 'pie',
-            name: '浏览器占比',
+            name: '车次比',
             minPointSize: 10,
             innerSize: '20%',
             zMin: 0,
@@ -114,7 +124,17 @@ export default {
             ]
           }]
         });
-    },   
+    },
+    computed: {
+      time() {
+        return this.$store.state.dateTime
+      }
+    },
+    watch: {
+      time() {
+        this.handleUpdate()
+      }
+    },
 }
 </script>
 <style lang="scss" scoped>
