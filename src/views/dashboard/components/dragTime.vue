@@ -31,6 +31,10 @@
                     <div class="time-value">{{endMonth}}月{{endDay}}日</div>
                 </div>
             </ul>
+            <div class="operate-box">
+                <svg-icon class="operate-svg" @click.native="handleFinsh" :icon-class="'complete-gou'"></svg-icon>
+                <svg-icon class="operate-svg" @click.native="handleClose" :icon-class="'close-icon'"></svg-icon>
+            </div>
         </div>
     </div>
 </template>
@@ -74,10 +78,16 @@ export default {
             })
         }
         //拖动按钮的时候每个月之间的值 拖动的距离除以每个区间的平均距离
-       
-       
     },
     methods:{
+        handleFinsh() {
+            this.$emit('changeFinsh')
+            let data = `${this.month}月${this.day}日 - ${this.endMonth}月${this.endDay}日`
+            this.$store.dispatch('setTime',data)
+        },
+        handleClose() {
+            this.$emit('changeClose')
+        },
         handleSpanStyle() {  //选中进度条部分制作
             let selectSpan = this.$refs.selectSpan;
             let marginSpan = 6;  //每个色块之间的空隙
@@ -110,6 +120,7 @@ export default {
         let btnLeft = this.thunk.offsetWidth / 2
 
         let curDate = new Date();
+        //vuex 传入默认的日期
         this.endMonth = curDate.getMonth()+1;
         this.endDay = curDate.getDate();
 
@@ -121,6 +132,7 @@ export default {
                 this.endStyle.left = `${((this.endMonth - 1) * _left) + (_left / item.day) * this.endDay - btnLeft}px`
             }
         })
+
         //初始化进度条月份的定位
         li.forEach((item,index) => {
             item.style.left = `${_left * index - (item.offsetWidth / 2)}px`
@@ -226,7 +238,19 @@ export default {
     //background:rgba(5, 27, 74, 0.8);
     padding:0px 12px 6px 12px;
     .slider{
+        position:relative;
         width:100%;
+        padding-right:3vw;
+        box-sizing:border-box;
+        .operate-box{
+            position:absolute;
+            top:50%;
+            right:-14px;
+            transform:translate(0,-50%);
+            .operate-svg{
+                cursor:pointer;
+            }
+        }
         .time-show{
             position:relative;
             left:50%;

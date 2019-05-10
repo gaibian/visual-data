@@ -17,6 +17,7 @@
         <div class="img-box">
             <span></span>
         </div>
+        
     </div>
 </template>
 <script>
@@ -53,7 +54,7 @@ export default {
         let carousel = this.$refs.carousel;
         let that = this;
         //1.看第一个li的高度多少就滚动多少 => 滚动完之后需要把第一个li插到最后去 => 再判断第一个li的高度继续滚动
-        setInterval(() => {
+        let setTime = setInterval(() => {
             this.moveTo = carousel.firstChild.offsetHeight;
             this.transformFlag = true;
             this.carouselStyle = {
@@ -91,6 +92,7 @@ export default {
             }
             transitionEvent && carousel.addEventListener(transitionEvent,handle);
         },5000)
+        // if(this.abnormalOptions.length)
 
         
         // setInterval(() => {
@@ -105,7 +107,7 @@ export default {
 <style lang="scss" scoped>
 .abnormal-page{
     width:100%;
-    height:92%;
+    height:90%;
     margin-top:10px;
     overflow:hidden;
     position: relative;

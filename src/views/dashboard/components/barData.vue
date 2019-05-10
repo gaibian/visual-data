@@ -12,6 +12,13 @@ export default {
     data() {
         return {
             myChart:null,
+            newData:[{
+                name: '出车准点率',
+                data: [90,98,78,86,65,90,76,78,12],
+            },{
+                name: '到达准点率',
+                data: [20,90,78,90,56,78,5,39,98]
+            }]
         }
     },
     mounted() {
@@ -49,6 +56,10 @@ export default {
         chart: {
             type: 'column', //表示柱状图
             marginTop: 60,
+            animation: {
+                duration: 1500,
+                easing: 'easeOutBounce'
+            },
             backgroundColor: 'rgba(0,0,0,0)',
             spacingBottom:5,
             options3d: {
@@ -82,11 +93,24 @@ export default {
         },
         credits: { enabled: false}, //去掉图表的highcharts文字
         plotOptions: {
+            // area:{
+            //     fillColor:{
+            //          x1: 0, 
+            //          y1: 1, 
+            //          x2: 0, 
+            //          y2: 0 
+            //     },
+            //     stops:[[0, 'rgb(255, 255, 255)'],
+            //             [0.3, 'rgb(255, 0, 255)'],
+            //             [0.6, 'rgb(0, 255, 0)'],
+            //             [1, 'rgb(200, 200, 255)']]
+            // },
             column: {
                 depth: 25,
                 groupPadding:0.25,
                 pointWidth: 15,
-            }
+            },
+        
         },
         legend: {  //图例
             align:'left',
@@ -139,16 +163,11 @@ export default {
                 }
             },
         },
-        series: [{
-            name: '出车准点率',
-            data: [90,98,78,86,65,90,76,78,12],
-        },{
-            name: '到达准点率',
-            data: [20,90,78,90,56,78,5,39,98]
-        }]
+        series: this.newData
 },(chart) => {
      SetEveryOnePointColor(chart);
 });
+
     }, 
 }
 </script>

@@ -20,7 +20,9 @@ import '@/icons' // icon
 import '../mock' // simulation data
 Vue.use(VCharts)
 Vue.use(ElementUI, { locale })
+let bus = new Vue();
 window._g = _g
+window.bus = bus
 Vue.config.productionTip = false
 new Vue({
   el: '#app',

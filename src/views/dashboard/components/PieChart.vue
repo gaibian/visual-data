@@ -49,7 +49,7 @@ export default {
             margin:0,
             options3d: {
               enabled: true,
-              alpha: 0,
+              alpha: 40,
               beta:0
             }
           },

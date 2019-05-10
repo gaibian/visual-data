@@ -2,7 +2,6 @@
     <div class="map-header-container">
         <div class="header-top-box">
             <div class="location-box">
-<<<<<<< HEAD
                 <svg-icon :icon-class="'location'"></svg-icon>
                 <div class="text">浙江省</div>
                 <div class="text">宁波市</div>
@@ -18,36 +17,21 @@
             <div class="choice-time-box">
                 <svg-icon :icon-class="'time'" style="margin-right:4px;"></svg-icon>
                 <span class="time-item" @click="timeFlag = true">2019-05-01 - 2019-05-30</span> 
-=======
-                <svg-icon :icon-class="'Location'"></svg-icon>
-                <span>浙江省</span>
-                <span>宁波市</span>
-                <span class="ads-choice">江北区<svg-icon :icon-class="'xiajiantou'" style="margin-left:4px"></svg-icon></span>
-            </div>
-            <div class="choice-time-box">
-                <svg-icon :icon-class="'time'" style="margin-right:4px;"></svg-icon>
-                <span class="time-item">2019-05-01</span> —
-                <span class="time-item">2019-05-30</span>
->>>>>>> 41527198081b2cef81f2667e5a826701685e2220
             </div>
         </div>
         <!--时间控件-->
-        <drag-time v-if="timeFlag" class="drag-time-box" :min='0' :max="100" v-model="per"></drag-time>
+        <drag-time v-if="timeFlag" class="drag-time-box" :min='0' :max="100" v-model="per" @changeClose="timeFlag = false" @changeFinsh="handleFinsh"></drag-time>
         <div class="header-bottom-box">
             <div class="status-text-box">
-                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_red'"></svg-icon>任务中车辆</div>
-                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_blue'"></svg-icon>途中待命</div>
-                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_green'"></svg-icon>站内待命</div>
-                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_black'"></svg-icon>未上班/下班</div>
+                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_red'"></svg-icon>任务中车辆(30)</div>
+                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_blue'"></svg-icon>途中待命(23)</div>
+                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_green'"></svg-icon>站内待命(78)</div>
+                <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_black'"></svg-icon>未上班/下班(34)</div>
             </div>
             <div class="hot-btn" @click="handleSvg">
                 <svg-icon :icon-class="svgFlag ? 'ThermodynamicChart_color' : 'ThermodynamicChart_nocolor'"></svg-icon>
             </div>
-<<<<<<< HEAD
-=======
-            <svg-icon :icon-class="'ThermodynamicChart_nocolor'" class="hot-btn"></svg-icon>
-            <!-- <div class="hot-btn"></div> -->
->>>>>>> 41527198081b2cef81f2667e5a826701685e2220
+ 
         </div>
     </div>
 </template>
@@ -76,12 +60,16 @@ export default {
         }
     },
     methods:{
+        handleFinsh(data) {
+            this.timeFlag = false;
+        },
         handleAreaClick(item,index) {
             this.areaIndex = index;
             this.areaValue = item.name;
         },
         handleSvg() {
             this.svgFlag = !this.svgFlag;
+            
             this.$emit('hotChange',this.svgFlag)
         }
     }   
@@ -95,7 +83,7 @@ export default {
         width:100%;
         box-sizing:border-box;
         display:flex;
-        font-size:12px;
+        font-size:14px;
         color:#fff;
         margin-bottom:12px;
         .location-box{
@@ -171,8 +159,7 @@ export default {
         width:100%;
         box-sizing:border-box;
         border-top:#216CFD 1px dashed;
-        padding-right:5vw;
-        padding-top:8px;
+        padding:8px 5vw 8px 0;
         margin-top:10px;
         .status-text-box{
             width:100%;
@@ -196,12 +183,6 @@ export default {
             height:24px;
             font-size:22px;
             cursor:pointer;
-            // background:url('../../../assets/hotBtn.png');
-<<<<<<< HEAD
-            // background-size:contain;
-=======
-            background-size:contain;
->>>>>>> 41527198081b2cef81f2667e5a826701685e2220
         }
     }
 }

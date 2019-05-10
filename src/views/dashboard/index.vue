@@ -3,47 +3,60 @@
     <!--标题-->
     <header-title></header-title>
     <!--内容区域 图表的展示-->
-    <div class="content-box tl charts-border-box">
+    <div class="content-box tl charts-border-box" ref="t1" :style="t1Style">
       <border-div></border-div>
       <div class="title-box">
         <span class="title">急救任务量</span>
-        <img src="../../assets/xie.png">
+        <!--<img src="../../assets/xie.png">-->
+        <div class="img-box">
+          <span v-for="(item,index) in 7" :key="index"></span>
+        </div>
         <span class="content-time">
-            <i></i>2019年5月
+            <i></i>{{time}}
         </span>
       </div>
-      <pie-charts></pie-charts>
+      <pie-charts :key="keyIndex"></pie-charts>
     </div>
-    <div class="content-box tb charts-border-box">
+    <div class="content-box tb charts-border-box" ref="tb" :style="tbStyle">
       <border-div></border-div>
       <div class="title-box">
         <span class="title">急救车异常情况一览表</span>
       </div>
       <car-abnormal></car-abnormal>
+      <!--收起按钮-->
+      <div class="switch-box" @click="handleSwitchClick">
+          <div class="air-box">
+            <svg-icon class="switch-icon" :icon-class="'switch-icon'"></svg-icon>
+          </div>
+      </div>
     </div>
-    <div class="content-box rl charts-border-box">
+    <div class="content-box rl charts-border-box" ref="r1" :style="r1Style">
       <border-div></border-div>
       <div class="title-box">
         <span class="title">急救准点率</span>
-        <img src="../../assets/xie.png">
+        <div class="img-box">
+          <span v-for="(item,index) in 7" :key="index"></span>
+        </div>
         <span class="content-time">
-            <i></i>2019年5月
+            <i></i>{{time}}
         </span>
       </div>
-      <bar-data></bar-data>
+      <bar-data :key="keyIndex"></bar-data>
     </div>
-    <div class="content-box rb charts-border-box">
+    <div class="content-box rb charts-border-box" ref="rb" :style="r1Style">
       <border-div></border-div>
       <div class="title-box">
         <span class="title">急救节点平均时间</span>
-        <img src="../../assets/xie.png">
+        <div class="img-box left">
+          <span v-for="(item,index) in 7" :key="index"></span>
+        </div>
         <span class="content-time">
-            <i></i>2019年5月
+            <i></i>{{time}}
         </span>
       </div>
-      <line-data></line-data>
+      <line-data :key="keyIndex"></line-data>
     </div>
-    <aid-map></aid-map>
+    <aid-map :switchFlag="switchFlag"></aid-map>
   </div>
 </template>
 
@@ -64,15 +77,56 @@ export default {
   },
   data() {
     return {
+      keyIndex:0,
+      tbStyle:{},
+      t1Style:{},
+      r1Style:{},
+      rbStyle:{},
+      switchFlag:true,
+    }
+  },
+  watch:{
+    time() {
+      this.keyIndex ++
     }
   },
   created() {
-
+   
   },
   mounted() {
   },
   methods:{
-
+    handleSwitchClick() {
+      
+      let contentBox = this.$refs.tb;
+      let contentBox1 = this.$refs.t1;
+      let contentBox2 = this.$refs.r1;
+      let contentBox3 = this.$refs.rb;
+      let windowHeight = document.body.clientHeight * 0.01;
+      if(this.switchFlag) {
+        this.tbStyle = {
+          transform: `translate(${contentBox.offsetWidth + windowHeight + 2}px,0)`
+        }
+        this.t1Style = {
+          transform: `translate(-${contentBox1.offsetWidth + windowHeight + 2}px,0)`
+        }
+        this.r1Style = {
+          transform: `translate(0,${contentBox2.offsetHeight + windowHeight + 2}px)`
+        }
+        this.switchFlag = false;
+      }else{
+        this.tbStyle = this.t1Style = this.r1Style = {
+          transform: `none`
+        }
+        this.switchFlag = true;
+      }
+      
+    }
+  },
+  computed: {
+    time() {
+      return this.$store.state.dateTime
+    }
   }
 }
 </script>
@@ -91,37 +145,81 @@ export default {
   background:#fff;
 }
 .content-time{
-    position:relative;
+    position:absolute;
     //margin-top:1vh;
-    width:100%;
+    top:50%;
+    transform:translate(0,-50%);
+    right:0;
     font-size:14px;
     color:#EAA551;
-    padding-left:18px;
-    margin-left:6px;
-    i{
-        display:block;
-        width:9px;
-        height:2px;
-        background:#EAA551;
-        position:absolute;
-        top:50%;
-        left:0;
-        transform:translate(0,-50%);
-    }
+    // padding-left:18px;
+    // margin-left:6px;
+    // i{
+    //     display:block;
+    //     width:9px;
+    //     height:2px;
+    //     background:#EAA551;
+    //     position:absolute;
+    //     top:50%;
+    //     left:0;
+    //     transform:translate(0,-50%);
+    // }
 }
 .content-box{
   position:fixed;
   padding:1.5vh;
   box-sizing:border-box;
+  transition:all 0.5s ease-in-out;
   z-index:9999;
+  .switch-box{
+      position:absolute;
+      top:50%;
+      left:-20px;
+      transform:translate(0,-50%);
+      width:20px;
+      height:40px;
+      overflow:hidden;
+      cursor:pointer;
+      .air-box{
+          width:40px;
+          height:100%;
+          border-radius:50%;
+          background:rgba(5,27,74,0.8);
+          border:1px solid rgba(10,67,188,1);
+          box-shadow:inset 4px 4px 20px rgba(0,229,255,0.3), inset -4px -4px 20px rgba(0,229,255,0.3);
+          color:#00EDFD;
+          .switch-icon{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+          }
+      }
+  }
   .title-box{
+    position:relative;
     width:100%;
     line-height: 25px;
-    img{
-      width: 180px;
-      height: 20px;
-      margin-left: 15px;
+    .img-box{
+      position:absolute;
+      top:50%;
+      height:16px;
+      transform:translate(0,-50%);
+      left:100px;
+      &.left{
+        left:150px;
+      }
+      span{
+        display:inline-block;
+        width:6px;
+        height:16px;
+        border-radius:14px;
+        background:#0E2972;
+        margin-right:6px;
+        transform:skew(-30deg);
+      }
     }
+    
   }
   .title{
     margin:0;

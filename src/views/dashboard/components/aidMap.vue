@@ -1,6 +1,6 @@
 <template>
     <div class="air-map">
-        <div class="map-header">
+        <div class="map-header" :style="headerStyle">
             <map-header @hotChange="handleHotChange"></map-header>
         </div>
         <div class="map" id="air-map"></div>
@@ -16,6 +16,7 @@ import heatmapData from '@/data/hotMap'
 import mapHeader from './mapHeader'
 export default {
     name: 'airMap',
+    props:['switchFlag'],
     components:{
         mapHeader
     },
@@ -25,6 +26,7 @@ export default {
             heatmap: null,  //热力图
             layer: null,
             amap: null,
+            headerStyle:{},
             markerArr: [],  //用来存储所有的车辆点 marker
             carData:[ //救护车位置的数据
                 { 'name': '海曙区', 'center': [121.55,29.87] ,lineArr:[]},
@@ -116,6 +118,17 @@ export default {
                 //对车辆的数据进行监控
             },
             deep:true
+        },
+        switchFlag() {
+            if(this.switchFlag){
+                this.headerStyle = {
+                    opacity:1
+                }
+            }else{
+                this.headerStyle = {
+                    opacity:0
+                }
+            }
         }
     },
     methods:{
@@ -217,7 +230,7 @@ export default {
 }
 .map-header{
     width:47vw;
-    padding:8px 12px;
+    padding:8px 12px 0px 12px;
     box-sizing:border-box;
     position:absolute;
     top:52px;
@@ -226,6 +239,7 @@ export default {
     background:rgba(5,27,74,0.8);
     box-shadow:inset 4px 4px 20px rgba(0,229,255,0.3), inset -4px -4px 20px rgba(0,229,255,0.3);
     z-index:999;
+    transition:opacity 0.5s ease-in-out;
 }
 .bottom-map{
     position:fixed;
