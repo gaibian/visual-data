@@ -4,11 +4,12 @@
             <map-header @hotChange="handleHotChange"></map-header>
         </div>
         <div class="map" id="air-map"></div>
-        <!--<div class="btn-box">
-            <el-button type="primary" size="mini" @click="handleHotShow">打开热力图</el-button>
-            <el-button type="primary" size="mini" @click="handleYI">移动车辆</el-button>
-            <el-button size="mini" @click="handleHotHide">关闭热力图</el-button>
-        </div>-->
+        <!--利用四个原点来确定地图的显示区域-->
+        <div class="left-top pos-box" ref="leftTop"></div>
+        <div class="right-top pos-box" ref="rightTop"></div>
+        <div class="left-bottom pos-box" ref="leftBottom"></div>
+        <div class="right-bottom pos-box" ref="rightBottom"></div>
+        <el-button size="mini" class="yi-class" @click="handleYI">定位移动</el-button>
     </div>
 </template>
 <script>
@@ -27,26 +28,41 @@ export default {
             layer: null,
             amap: null,
             headerStyle:{},
+            queue:[],
+            positions:[],
+            newPositions:[],
             markerArr: [],  //用来存储所有的车辆点 marker
             carData:[ //救护车位置的数据
-                { 'name': '海曙区', 'center': [121.55,29.87] ,lineArr:[]},
-                { 'name': '江东区', 'center': [121.57,29.87] ,lineArr:[]},
-                { 'name': '江东区', 'center': [121.56,29.89] ,lineArr:[]},
-                { 'name': '江东区', 'center': [121.54,29.67] ,lineArr:[]},
-                { 'name': '江东区', 'center': [121.59,29.92] ,lineArr:[]},
-                { 'name': '江东区', 'center': [121.62,29.93] ,lineArr:[]},
+                { 'name': '1号车', 'center': [121.591836,29.857163] ,lineArr:[]},
+                { 'name': '2号车', 'center': [121.594567,29.856789] ,lineArr:[]},
+                { 'name': '3号车', 'center': [121.594343,29.856897] ,lineArr:[]},
+                { 'name': '4号车', 'center': [121.594896,29.856309] ,lineArr:[]},
+                { 'name': '5号车', 'center': [121.594278,29.856290] ,lineArr:[]},
+                { 'name': '6号车', 'center': [121.594109,29.856407] ,lineArr:[]},
             ],
         }
     },
     created() {
  
     },
+
     mounted() {
+        // let leftTop = this.$refs.leftTop;
+        // let leftBottom = this.$refs.leftBottom;
+        // let rightTop = this.$refs.rightTop;
+        // let rightBottom = this.$refs.rightBottom;
+        // let leftTopArr = [leftTop.getBoundingClientRect().left,leftTop.getBoundingClientRect().top]
+        // let leftBottomArr = [leftBottom.getBoundingClientRect().left,leftTop.getBoundingClientRect().top]
+        // let rightTopArr = [rightTop.getBoundingClientRect().left,leftTop.getBoundingClientRect().top]
+        // let rightBottomArr = [rightBottom.getBoundingClientRect().left,leftTop.getBoundingClientRect().top]
+        // this.positions = [leftTopArr,leftBottomArr,rightTopArr,rightBottomArr];
+
         //创建可视化图层
         this.loca = Loca.create('air-map',{
             zoom:11,
             resizeEnable: false,
-            center:[121.55,29.87],
+            center:this.center,
+            
             mapStyle: 'amap://styles/f18517cc1b61e250c2d887327b12d665',
             viewMode:'2d'
         })
@@ -54,35 +70,33 @@ export default {
         this.loca.on('mapload',() => {  //判断地图是否加载完成
             this.amap = this.loca.getMap();  //获取到高德地图
             var marker,polyline,passedPolyline
+            // this.positions.forEach(item => {
+            //     let pixel = new AMap.Pixel(item[0], item[1]);
+            //     let lnglat = this.amap.containerToLngLat(pixel);  // 获得 LngLat 对象=
+            //     this.newPositions.push(lnglat)
+            // })
+
             //需要在地图上面添加蒙版
             for(let item of this.carData){
                 item.lineArr.push(item.center)
                 let marker = new AMap.Marker({
                     map: this.amap,
                     position: item.center,
-                    icon: "https://webapi.amap.com/images/car.png",
-                    offset: new AMap.Pixel(-26, -13),
+                    //icon: "https://webapi.amap.com/images/car.png",
+                    icon:require('../../../assets/j-car.png'),
+                    offset: new AMap.Pixel(-30, -17),
+                    //offset: new AMap.Pixel(-26, -13),
                     autoRotation: true,
                     angle:-90,
                 });
-                // var polyline = new AMap.Polyline({
-                //     map: this.amap,
-                //     path: item.lineArr,
-                //     showDir:true,
-                //     strokeColor: "#28F",  //线颜色
-                //     strokeWeight: 6,      //线宽
+                //marker 正在移动当中
+                // marker.on('moving', function (e) {
+                //     passedPolyline.setPath(e.passedPath);
                 // });
-                // var passedPolyline = new AMap.Polyline({
-                //     map: this.amap,
-                //     strokeColor: "#AF5",  //线颜色
-                //     strokeWeight: 6,      //线宽
-                // });
-                marker.on('moving', function (e) {
-                    //passedPolyline.setPath(e.passedPath);
-                });
                 this.markerArr.push(marker);
+                 //实时路况图层
             }
-            this.amap.setFitView();
+            
             for(let item of this.markerArr){
                 item.hide()
             }
@@ -109,16 +123,18 @@ export default {
                     max: 100
                 });
             });
-        })
-        
+            this.amap.setFitView();
+        }) 
     },
     watch:{
-        carData:{
+        center:{
             handler() {
                 //对车辆的数据进行监控
+                this.amap.setCenter(this.center)
             },
             deep:true
         },
+        
         switchFlag() {
             if(this.switchFlag){
                 this.headerStyle = {
@@ -131,31 +147,84 @@ export default {
             }
         }
     },
+    computed: {
+        center() {
+            return this.$store.state.center
+        }
+    },
     methods:{
         handleHotChange(flag) {
             flag ? this.handleHotHide() : this.handleHotShow()
         },
         handleYI() {
-            //车辆的实时定位 存入对应的数组
-            function random(lower, upper) {
-                return Math.floor(Math.random() * (upper - lower)) + lower;
-            }
-            for(let item of this.carData){
-                if(item.lineArr.length >= 2){
-                    item.lineArr.splice(0,1);
+            const _that = this;
+            class carQueue {
+                constructor(item,index) {
+                    this.item = item;
+                    this.index = index;
+                    this.init()
                 }
-                item.lineArr.push([item.lineArr[0][0] + (Math.random() / 100),item.lineArr[0][1] + (Math.random() / 100)])
-            }
-            //车辆进行移动
-            for(let i = 0; i < this.markerArr.length;i++){
-                for(let k = 0; k < this.carData.length;k++){
-                    if(i == k) {
-                        let line = this.carData[i].lineArr
-                        let newArr = [].concat(line)
-                        this.markerArr[i].moveTo(newArr,1000)
+                // random(lower, upper) {
+                //     return Math.floor(Math.random() * (upper - lower)) + lower;
+                // }
+                init() {
+                    _that.amap.setFitView();
+                    let item = _that.carData[this.index]
+                    
+                    if(item.lineArr.length >= 2) {
+                        item.lineArr.splice(0,1);
                     }
+                    item.lineArr.push([item.lineArr[0][0] + (Math.random() / (( this.index + 1 ) * 100)),item.lineArr[0][1] + (Math.random() / (( this.index + 1 ) * 100))])
+
+                    let newArr = [].concat(item.lineArr)
+                    this.item.moveTo(newArr,100)
+                    //运动结束再传入下一次的GPS
+                    //运动结束 重新运动 监控每一辆车运动完毕  单利模式  => 只需要在地图上的一块区域显示
+                    let handle = () => {
+                        console.log(`${item.name}运动结束`)
+                        this.item.off('moveend',handle)
+                        this.init() 
+                    }
+                    
+                    this.item.on('moveend',handle)
                 }
             }
+
+            this.markerArr.forEach((item,index) => {
+                console.log(this.queue)
+                this.queue.push(new carQueue(item,index))
+            })
+            // function random(lower, upper) {
+            //     return Math.floor(Math.random() * (upper - lower)) + lower;
+            // }
+            // for(let item of this.carData){
+            //     if(item.lineArr.length >= 2){
+            //         item.lineArr.splice(0,1);
+            //     }
+            //     item.lineArr.push([item.lineArr[0][0] + (Math.random() / 1000),item.lineArr[0][1] + (Math.random() / 1000)])
+            // }
+            // for(let i = 0; i < this.markerArr.length;i++){
+            //     for(let k = 0; k < this.carData.length;k++){
+            //         if(i == k) {
+            //             let item = this.carData[i]
+            //             if(item.lineArr.length >= 2) {
+            //                 item.lineArr.splice(0,1);
+            //             }
+            //             item.lineArr.push([item.lineArr[0][0] + (Math.random() / 1000),item.lineArr[0][1] + (Math.random() / 1000)])
+            //             let line = this.carData[i].lineArr
+            //             let newArr = [].concat(line)
+            //             this.markerArr[i].moveTo(newArr,50)
+            //             //运动结束再传入下一次的GPS
+            //             console.log('ssss')
+            //             //运动结束 重新运动 监控每一辆车运动完毕  单利模式
+            //             this.markerArr[i].on('moveend',(e) => {
+            //                 console.log('运动结束')
+            //             })
+            //         }
+            //     }
+            // }
+
+            
         },
         //急救车位置图层  车辆的实时定位 => 一般是在车辆静止的时候传GPS => 在移动的过程当中可能会发生GPS位置漂移
         airLocat() {
@@ -279,6 +348,35 @@ export default {
             margin-right:1vh;
         }
     }
+}
+
+.pos-box{
+    width:1px;
+    height:1px;
+    background:#fff;
+    position:absolute;
+}
+.left-top{
+    left:26vw;
+    top:14vh;
+}
+.left-bottom{
+    bottom:36vh;
+    left:26vw;
+}
+.right-top{
+    right:26vw;
+    top:14vh;
+}
+.right-bottom{
+    right:26vw;
+    bottom:36vh;
+}
+
+.yi-class{
+    position:absolute;
+    top:189px;
+    right:30vw;
 }
 
 </style>

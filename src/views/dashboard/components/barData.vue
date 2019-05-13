@@ -22,15 +22,10 @@ export default {
         }
     },
     mounted() {
-        
         this.chart = Highcharts.chart('bar-charts-box',{
             chart: {
                 type: 'column', //表示柱状图
                 marginTop: 60,
-                animation: {
-                    duration: 1500,
-                    easing: 'easeOutBounce'
-                },
                 backgroundColor: 'rgba(0,0,0,0)',
                 spacingBottom:5,
                 options3d: {
@@ -109,8 +104,6 @@ export default {
                 title: {
                     text: null
                 },
-                // max:100,
-                // tickInterval:20,
                 gridLineColor:'#254065',
                 tickPositions: [0, 20, 40,60,80, 100],
                 labels: {
@@ -118,7 +111,7 @@ export default {
                         color: '#76C0FF'
                     },
                     formatter() {
-                        return `${this.value}%`
+                        return `<span style="color:${this.value == 80 ? '#D73147' : '#76C0FF'}">${this.value}%</span>`
                     }
                 },
             },

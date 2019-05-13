@@ -142,8 +142,6 @@ export default {
                 name: '回站时间',
                 data: [4.9, 8.2, 7.7, 14.5, 14.9, 19.2, 17.0, 20.6, 25]
             }]
-            console.log('xian gengxle')
-            // this.chart.series[0].setData(this.newData);
             this.chart.update({
                 series:this.newData
             })

@@ -79,7 +79,6 @@ export default {
             var transitionEvent = whichTransitionEvent();
             function handle() {
                 if(that.transformFlag) {
-                    console.log('css3运动结束');
                     let fitstDom = carousel.removeChild(carousel.firstChild);
                     carousel.lastChild.after(fitstDom)
                     that.carouselStyle = {

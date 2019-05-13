@@ -15,7 +15,7 @@
             <i></i>{{time}}
         </span>
       </div>
-      <pie-charts :key="keyIndex"></pie-charts>
+      <pie-charts></pie-charts>
     </div>
     <div class="content-box tb charts-border-box" ref="tb" :style="tbStyle">
       <border-div></border-div>
@@ -41,7 +41,7 @@
             <i></i>{{time}}
         </span>
       </div>
-      <bar-data :key="keyIndex"></bar-data>
+      <bar-data></bar-data>
     </div>
     <div class="content-box rb charts-border-box" ref="rb" :style="r1Style">
       <border-div></border-div>
@@ -54,7 +54,7 @@
             <i></i>{{time}}
         </span>
       </div>
-      <line-data :key="keyIndex"></line-data>
+      <line-data></line-data>
     </div>
     <aid-map :switchFlag="switchFlag"></aid-map>
   </div>
@@ -77,7 +77,6 @@ export default {
   },
   data() {
     return {
-      keyIndex:0,
       tbStyle:{},
       t1Style:{},
       r1Style:{},
@@ -85,12 +84,6 @@ export default {
       switchFlag:true,
     }
   },
-  // watch:{
-  //   time() {
-  //     console.log('ssss')
-  //     this.keyIndex ++
-  //   }
-  // },
   created() {
    
   },

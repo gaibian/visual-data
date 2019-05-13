@@ -41,7 +41,7 @@
 <script>
 export default {
     name: 'dragTime',
-    props:['min','max','value'],
+    props:['time'],
     data() {
         return {
             slider:null,        //滚动条DOM元素
@@ -51,6 +51,7 @@ export default {
             month:1,
             day:1,
             maxWidth:0,
+            minLeft:0,
             endMonth:0,
             endDay:0,
             endStyle: {
@@ -80,6 +81,12 @@ export default {
         //拖动按钮的时候每个月之间的值 拖动的距离除以每个区间的平均距离
     },
     methods:{
+        pTime() {
+            let date = new Date;
+            let year = date.getFullYear();
+            let text = `${year}-${this.month}-${this.day} - ${year}-${this.endMonth}-${this.endDay}`
+            this.$emit('timeChange',text) 
+        },
         handleFinsh() {
             this.$emit('changeFinsh')
             let data = `${this.month}月${this.day}日 - ${this.endMonth}月${this.endDay}日`
@@ -105,9 +112,9 @@ export default {
             curDate.setDate(0);
             return curDate.getDate();
         },
-        //时间选择区间
     },
     mounted() {
+        //时间拖动的数值还是有点问题的
         this.handleSpanStyle();
         let ul = this.$refs.ul
         let li = this.$refs.li;
@@ -117,26 +124,37 @@ export default {
         this.endTrunk = this.$refs.endTrunk;
         let ulWidth = ul.offsetWidth;
         let _left = ulWidth / 12;  //每一段距离
-        let btnLeft = this.thunk.offsetWidth / 2
-
-        let curDate = new Date();
-        //vuex 传入默认的日期
-        this.endMonth = curDate.getMonth()+1;
-        this.endDay = curDate.getDate();
-
-        this.monthOptions.forEach((item,index) => {
-            if(item.name == this.endMonth) {
-                this.selectStyle.width = `${((this.endMonth - 1) * _left) + (_left / item.day) * this.endDay}px`
-                // 默认的最大宽度值
-                this.maxWidth = ((this.endMonth - 1) * _left) + (_left / item.day) * this.endDay;
-                this.endStyle.left = `${((this.endMonth - 1) * _left) + (_left / item.day) * this.endDay - btnLeft}px`
-            }
-        })
-
+        let btnLeft = 9;
         //初始化进度条月份的定位
         li.forEach((item,index) => {
             item.style.left = `${_left * index - (item.offsetWidth / 2)}px`
         })
+
+        let startTime = this.time.substring(0,8)
+        let endTime = this.time.substring(11,this.time.length)
+        this.endMonth = endTime.split('-')[1];
+        this.endDay = endTime.split('-')[2];
+        this.month = startTime.split('-')[1];
+        this.day = startTime.split('-')[2];
+        let date = new Date;
+
+        let endMonth = date.getMonth() + 1;
+        let endDay = date.getDate();
+    
+        //设置默认结束值和最大日期
+        this.monthOptions.forEach((item,index) => {
+            if(item.name == this.endMonth) {
+                let leftInit = ((this.month - 1) * _left) + (_left / (item.day)) * this.day;
+                this.selectStyle.width = `${((this.endMonth - 1) * _left) + (_left / (item.day)) * this.endDay - leftInit}px`
+                this.endStyle.left = `${((this.endMonth - 1) * _left) + (_left / (item.day)) * this.endDay - btnLeft}px`
+                this.style.left = `${((this.month - 1) * _left) + (_left / (item.day)) * this.day - btnLeft}px`
+                this.selectStyle.left = `${leftInit}px`
+                // 默认的最大宽度值
+                this.maxWidth = ((endMonth - 1) * _left) + ((_left / (item.day)) * (endDay - 1));
+            }
+        })
+
+        
         this.thunk.onmousedown = (e) => {
             let disX = e.clientX;
             //需要先获取到left值
@@ -148,20 +166,17 @@ export default {
                 let newWidth = e.clientX - disX + moveWidth;  //节点划过的距离 + 之前划过的距离 => 用这个值来判断当前的起始时间
                 this.style.zIndex = 2;
                 this.endStyle.zIndex = 1;
-                
+        
                 if(e.clientX - disX + thunkLeft <= -9) {
                     console.warn('已经滑到顶了')
                 }else{
-                    if(newWidth >= parseInt(this.endStyle.left) + btnLeft) {
+                    if(newWidth > parseInt(this.endStyle.left) + btnLeft) {
                         console.warn('起始日期不能超过结束日期')
                     }else{
                         this.selectStyle.left = `${newWidth}px`
                         this.selectStyle.width = `${parseInt(this.endStyle.left) - newWidth +　btnLeft}px`
                         this.style.left = `${e.clientX - disX + thunkLeft}px`  //算距离的话需要在加上9
                         let calcWidth = newWidth
-                        //更新最大宽度值
-                        //this.maxWidth = max - (e.clientX - disX + thunkLeft)
-              
                         //计算到几月份了
                         this.monthOptions.forEach((item,index) => {
                             if(calcWidth > index * _left && calcWidth <= (index + 1) * _left) {
@@ -176,6 +191,7 @@ export default {
                         })
                     }
                 }
+                this.pTime()
             }
             document.onmouseup = function(){
                 document.onmousemove = document.onmouseup = null;
@@ -190,10 +206,10 @@ export default {
             document.onmousemove = (e) => {
                 this.style.zIndex = 1;
                 this.endStyle.zIndex = 2;
-                 if(e.clientX - disX + thunkLeft +　btnLeft >= this.maxWidth){
+                 if(e.clientX - disX + thunkLeft + btnLeft > this.maxWidth){
                     console.warn('不能选择未来的时间')
                 }else{
-                    let newWidth = e.clientX - disX + moveWidth
+                    let newWidth = parseInt(e.clientX - disX + moveWidth)
                     if(newWidth < 0) {
                         console.warn('结束日期不能大于起始日期')
                     }else{
@@ -216,7 +232,7 @@ export default {
                     
 
                 }
-
+                this.pTime()
             }
             document.onmouseup = function(){
                 document.onmousemove = document.onmouseup = null;

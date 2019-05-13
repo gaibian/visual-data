@@ -16,11 +16,11 @@
             </div>
             <div class="choice-time-box">
                 <svg-icon :icon-class="'time'" style="margin-right:4px;"></svg-icon>
-                <span class="time-item" @click="timeFlag = true">2019-05-01 - 2019-05-30</span> 
+                <span class="time-item" @click="timeFlag = true">{{time}}</span> 
             </div>
         </div>
         <!--时间控件-->
-        <drag-time v-if="timeFlag" class="drag-time-box" :min='0' :max="100" v-model="per" @changeClose="timeFlag = false" @changeFinsh="handleFinsh"></drag-time>
+        <drag-time v-if="timeFlag" class="drag-time-box" @timeChange="handleTime" :time="time" @changeClose="timeFlag = false" @changeFinsh="handleFinsh"></drag-time>
         <div class="header-bottom-box">
             <div class="status-text-box">
                 <div class="status-item"><svg-icon class="car-svg" :icon-class="'car_red'"></svg-icon>任务中车辆(30)</div>
@@ -49,27 +49,44 @@ export default {
             timeFlag:false,
             areaValue:'海曙区',
             areaIndex:0,
+            time:'2019-2-2 - 2019-4-8',
             areaFlag:false,
             areaOptions:[{
-                name:'海曙区'
+                name:'海曙区',
+                center:[121.55,29.87]
             },{
-                name:'江北区'
+                name:'江北区',
+                center:[121.55,29.88]
             },{
-                name:'鄞州区'
+                name:'鄞州区',
+                center:[121.53,29.83]
             }]
         }
     },
+    created() {
+        // let date = new Date;
+        // let year = date.getFullYear();
+        // let endMonth = date.getMonth()+1;
+        // let endDay = date.getDate();
+        // this.time = `${year}-1-1 - ${year}-${endMonth}-${endDay}`
+    },
     methods:{
+        handleTime(text) {
+            this.time = text
+        },
         handleFinsh(data) {
             this.timeFlag = false;
         },
         handleAreaClick(item,index) {
             this.areaIndex = index;
             this.areaValue = item.name;
+            //选中地图区域选中到对应的区
+
+             this.$store.dispatch('setCenter',item.center)
+
         },
         handleSvg() {
             this.svgFlag = !this.svgFlag;
-            
             this.$emit('hotChange',this.svgFlag)
         }
     }   
